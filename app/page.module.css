@@ -25,6 +25,7 @@
 
 .heroImg {
   object-fit: cover;
+  object-position: center 30%;
   opacity: 0.6;
 }
 
@@ -275,10 +276,37 @@
   background: var(--cat-color, var(--primary));
 }
 
+/* Memphis-inspired decorative shape */
+.catCard::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  width: 48px;
+  height: 48px;
+  background: var(--cat-color, var(--primary));
+  opacity: 0.06;
+  border-radius: 50%;
+  transition: opacity var(--transition), transform var(--transition);
+  z-index: 0;
+}
+
+.catCard:hover::after {
+  opacity: 0.12;
+  transform: scale(1.5);
+}
+
 .catCard:hover {
   border-color: var(--cat-color, var(--primary));
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  transform: translateY(-4px);
+  box-shadow: 
+    0 4px 0px var(--cat-color, rgba(79, 70, 229, 0.35)),
+    0 12px 32px rgba(0, 0, 0, 0.12);
+  transform: translateY(-6px);
+}
+
+.catCard:focus-visible {
+  outline: 3px solid var(--cat-color, var(--primary-light));
+  outline-offset: 3px;
 }
 
 .catIcon {
@@ -364,6 +392,114 @@
 /* ============================================================
    CTA FINAL
    ============================================================ */
+/* ============================================================
+   NUEVOS INGRESOS
+   ============================================================ */
+.newestSection {
+  background: var(--surface);
+}
+
+/* ============================================================
+   CATEGORY SHOWCASE (Feature-Rich — alternating bg)
+   ============================================================ */
+.catShowcaseEven {
+  background: var(--bg);
+}
+
+.catShowcaseOdd {
+  background: var(--surface-2);
+}
+
+/* ============================================================
+   SOCIAL PROOF (Marketing Psychology)
+   ============================================================ */
+.socialProof {
+  background: var(--surface);
+  padding: var(--space-3xl) 0;
+}
+
+.proofGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+  text-align: center;
+}
+
+.proofCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-xl);
+  background: var(--bg);
+  border-radius: var(--radius-xl);
+  border: var(--border-clay);
+  box-shadow: var(--shadow-clay-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.proofCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-clay);
+}
+
+.proofNumber {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.proofLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* ============================================================
+   URGENCY BANNER (Marketing Psychology: Scarcity)
+   ============================================================ */
+.urgencyBanner {
+  background: linear-gradient(135deg, #FF71CE 0%, #FFCE5C 50%, #86CCCA 100%);
+  padding: var(--space-md) 0;
+  text-align: center;
+}
+
+.urgencyText {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1E1B4B;
+  margin: 0;
+}
+
+/* ============================================================
+   RESPONSIVE — Social proof + Urgency
+   ============================================================ */
+@media (max-width: 768px) {
+  .proofGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .proofNumber {
+    font-size: 1.5rem;
+  }
+
+  .urgencyText {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .proofGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================================
+   CTA FINAL
+   ============================================================ */
 .ctaSection {
   padding: var(--space-4xl) 0;
   background: var(--bg);
@@ -409,14 +545,22 @@
 
 .ctaBox .btn-primary {
   position: relative;
-  background: white;
-  color: var(--primary);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  background: var(--secondary);
+  color: white;
+  border: 3px solid var(--secondary-dark);
+  box-shadow: 
+    0 4px 0px rgba(234, 88, 12, 0.5),
+    0 8px 24px rgba(249, 115, 22, 0.3);
+  font-size: 1.05rem;
+  padding: 16px 36px;
 }
 
 .ctaBox .btn-primary:hover {
-  background: var(--accent);
-  color: var(--text);
+  background: var(--secondary-dark);
+  transform: translateY(-3px);
+  box-shadow: 
+    0 6px 0px rgba(234, 88, 12, 0.5),
+    0 16px 40px rgba(249, 115, 22, 0.35);
 }
 
 /* ============================================================
@@ -439,7 +583,11 @@
 @media (max-width: 768px) {
   .hero {
     padding: 60px 0;
-    min-height: auto;
+    min-height: 500px;
+  }
+
+  .heroImg {
+    object-position: center center;
   }
 
   .heroContent {
