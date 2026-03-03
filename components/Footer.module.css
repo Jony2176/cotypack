@@ -4,45 +4,71 @@
     margin-top: auto;
 }
 
+/* Main Footer */
+.main {
+    padding: 40px 0 32px;
+}
+
 .inner {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 64px var(--space-lg) 40px;
+    padding: 0 var(--space-lg);
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    grid-template-columns: 1.5fr 1fr 1.5fr 1.2fr;
     gap: 48px;
 }
 
-/* Brand column */
-.brand {}
-
-.logo {
+/* Brand Column */
+.brandCol {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    flex-direction: column;
+}
+
+.logoLink {
+    display: inline-block;
+    background: white;
+    border-radius: 12px;
+    padding: 8px 12px;
+    box-shadow: 0 4px 0 rgba(79,70,229,0.15), 0 8px 20px rgba(79,70,229,0.1);
+    width: fit-content;
     margin-bottom: 12px;
 }
 
-.logo span:first-child {
-    font-size: 1.5rem;
-}
-
-.logoText {
-    font-family: var(--font-heading);
-    font-size: 1.4rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #a78bfa, #f9a8d4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.logoImg {
+    height: 60px;
+    width: auto;
+    display: block;
 }
 
 .tagline {
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     color: #9CA3AF;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    max-width: 260px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.trustRow {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.trustBadge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #4ADE80;
+}
+
+.trustBadge svg {
+    width: 12px;
+    height: 12px;
 }
 
 .socials {
@@ -54,133 +80,171 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     background: rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius-md);
+    border-radius: 8px;
     color: #9CA3AF;
-    transition: all var(--transition);
-    text-decoration: none;
+    transition: all 0.2s ease;
 }
 
 .socialBtn:hover {
     background: var(--primary);
     color: white;
-    transform: translateY(-2px);
 }
 
-/* Nav columns */
-.col {}
-
-.colTitle {
-    font-size: 0.8rem;
+/* Links Columns */
+.linksCol h4,
+.contactCol h4 {
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     color: #9CA3AF;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
-.col ul {
+.linksCol ul {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
-
-.footLink {
-    font-size: 0.9rem;
-    color: #D1D5DB;
-    text-decoration: none;
-    transition: color var(--transition);
-}
-
-.footLink:hover {
-    color: white;
-}
-
-/* Contact */
-.contactList {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    font-size: 0.875rem;
-    color: #D1D5DB;
-    margin-bottom: 20px;
-}
-
-.payments {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.payments>span {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #9CA3AF;
-    font-weight: 600;
-}
-
-.paymentBadges {
-    display: flex;
-    flex-wrap: wrap;
     gap: 6px;
 }
 
-.payBadge {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius-sm);
-    padding: 4px 10px;
-    font-size: 0.75rem;
+.linksCol a {
+    font-size: 0.85rem;
     color: #D1D5DB;
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
-/* Bottom bar */
-.bottom {
+.linksCol a:hover {
+    color: white;
+}
+
+/* Contact Column */
+.contactCol {
+    display: flex;
+    flex-direction: column;
+}
+
+.contactList {
+    font-size: 0.85rem;
+    color: #D1D5DB;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.paymentTitle {
+    margin-top: 0 !important;
+    margin-bottom: 8px !important;
+}
+
+.paymentIcons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.paymentIcons svg,
+.paymentIcons img {
+    width: 36px;
+    height: 24px;
+    border-radius: 4px;
+    display: block;
+}
+
+.paymentNote {
+    font-size: 0.75rem;
+    color: #9CA3AF;
+    margin-top: 8px;
+}
+
+/* Security Bar */
+.securityBar {
+    background: rgba(255, 255, 255, 0.02);
     border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 12px 0;
 }
 
-.bottomInner {
+.securityInner {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 20px var(--space-lg);
+    padding: 0 var(--space-lg);
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
     font-size: 0.8rem;
+    color: #9CA3AF;
+}
+
+.securityInner span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.securityInner svg {
+    width: 14px;
+    height: 14px;
+    color: var(--primary);
+}
+
+.divider {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+/* Bottom Bar */
+.bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 12px var(--space-lg);
+    text-align: center;
+    font-size: 0.75rem;
     color: #6B7280;
 }
 
+/* Responsive */
 @media (max-width: 1024px) {
     .inner {
         grid-template-columns: 1fr 1fr;
-        gap: 40px;
+        gap: 32px;
     }
-
-    .brand {
+    
+    .brandCol {
         grid-column: 1 / -1;
+    }
+    
+    .trustRow {
+        justify-content: flex-start;
     }
 }
 
 @media (max-width: 640px) {
+    .main {
+        padding: 32px 0 24px;
+    }
+    
     .inner {
         grid-template-columns: 1fr;
-        gap: var(--space-xl);
-        padding: 40px var(--space-md) 24px;
+        gap: 24px;
     }
-
-    .brand {
+    
+    .brandCol {
         grid-column: 1;
     }
-
-    .tagline {
-        max-width: 100%;
-    }
-
-    .bottomInner {
-        flex-direction: column;
+    
+    .securityInner {
         gap: 8px;
-        text-align: center;
+    }
+    
+    .divider {
+        display: none;
+    }
+    
+    .securityInner span {
+        font-size: 0.75rem;
     }
 }

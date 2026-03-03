@@ -1,0 +1,257 @@
+.page {
+  padding-top: var(--navbar-height);
+  background: var(--bg);
+}
+
+.hero {
+  background: linear-gradient(145deg, #EEF2FF 0%, #E0E7FF 50%, #EDE9FE 100%);
+  padding: var(--space-4xl) 0;
+  text-align: center;
+  border-bottom: 3px solid rgba(79, 70, 229, 0.15);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: var(--space-sm);
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+}
+
+.content {
+  padding: var(--space-4xl) 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 480px));
+  gap: var(--space-xl);
+  margin-bottom: var(--space-4xl);
+  justify-content: center;
+}
+
+.card {
+  background: white;
+  border-radius: var(--radius-2xl);
+  border: var(--border-clay);
+  box-shadow: var(--shadow-clay-sm);
+  padding: var(--space-2xl);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-clay);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  color: var(--primary);
+}
+
+.card h2 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--text);
+}
+
+.description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+}
+
+.detailsBox {
+  background: var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.detailsBox h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: var(--space-sm);
+}
+
+.dataRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.dataRow:last-child {
+  border-bottom: none;
+}
+
+.dataRow span {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.dataRow strong {
+  font-size: 0.95rem;
+  color: var(--text);
+  font-family: monospace;
+  background: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.copyText {
+  cursor: pointer;
+  position: relative;
+}
+
+.copyText:hover::after {
+  content: 'Copiar';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+
+.note {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.list li {
+  padding: 6px 0;
+  padding-left: 20px;
+  position: relative;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--success);
+  font-weight: 700;
+}
+
+.badgeList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.badge {
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Info Section */
+.infoSection {
+  margin-bottom: var(--space-4xl);
+}
+
+.infoSection h2 {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+.infoCard {
+  background: white;
+  padding: var(--space-xl);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+}
+
+.infoCard h3 {
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-bottom: var(--space-sm);
+}
+
+.infoCard p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* CTA Box */
+.ctaBox {
+  background: white;
+  padding: var(--space-2xl);
+  border-radius: var(--radius-2xl);
+  border: var(--border-clay);
+  box-shadow: var(--shadow-clay-sm);
+  text-align: center;
+}
+
+.ctaBox p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .dataRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}

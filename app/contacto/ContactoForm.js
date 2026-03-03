@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import styles from './page.module.css';
+import RecaptchaField from '@/components/RecaptchaField';
 
 /* SVG icons — no emojis */
 const IconMapPin = () => (
@@ -40,22 +41,27 @@ const IconCheck = () => (
 const INFO_ITEMS = [
     { Icon: IconMapPin, title: 'Ubicación', text: 'Buenos Aires, Argentina' },
     { Icon: IconMail, title: 'Email', text: 'hola@cotypack.com' },
-    { Icon: IconPhone, title: 'WhatsApp', text: '+54 11 0000-0000' },
+    { Icon: IconPhone, title: 'WhatsApp', text: '+54 11 5005-8648' },
     { Icon: IconClock, title: 'Horario', text: 'Lunes a Sábados\n9:00 – 18:00 hs' },
 ];
 
 export default function ContactoForm() {
     const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
+    const [captchaToken, setCaptchaToken] = useState(null);
     const [sent, setSent] = useState(false);
 
     const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!captchaToken) {
+            alert('Por favor, verificá que no sos un robot.');
+            return;
+        }
         const msg = encodeURIComponent(
             `Hola Cotypack! Soy ${form.name}.\n\nMensaje: ${form.message}\n\nContacto: ${form.email} | ${form.phone}`
         );
-        window.open(`https://wa.me/541100000000?text=${msg}`, '_blank');
+        window.open(`https://wa.me/5491150058648?text=${msg}`, '_blank');
         setSent(true);
     };
 
