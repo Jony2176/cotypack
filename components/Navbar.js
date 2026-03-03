@@ -33,7 +33,9 @@ export default function Navbar() {
                 <div className={styles.links}>
                     <Link href="/" className={styles.link}>Inicio</Link>
                     <Link href="/productos" className={styles.link}>Productos</Link>
+                    <Link href="/sobre-nosotros" className={styles.link}>Nosotros</Link>
                     <Link href="/contacto" className={styles.link}>Contacto</Link>
+                    <Link href="/mayoristas" className={`${styles.link} ${styles.linkMayorista}`}>Mayoristas</Link>
                 </div>
 
                 {/* Acciones */}
@@ -65,7 +67,9 @@ export default function Navbar() {
             <div className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ''}`}>
                 <Link href="/" className={styles.mobileLink} onClick={() => setMenuOpen(false)}>Inicio</Link>
                 <Link href="/productos" className={styles.mobileLink} onClick={() => setMenuOpen(false)}>Productos</Link>
+                <Link href="/sobre-nosotros" className={styles.mobileLink} onClick={() => setMenuOpen(false)}>Sobre Nosotros</Link>
                 <Link href="/contacto" className={styles.mobileLink} onClick={() => setMenuOpen(false)}>Contacto</Link>
+                <Link href="/mayoristas" className={styles.mobileLink} onClick={() => setMenuOpen(false)}>Venta Mayorista</Link>
             </div>
         </nav>
     );

@@ -8,7 +8,11 @@ export const revalidate = 60;
 
 async function getData() {
   const [categories, featuredProducts, newestProducts, categorySamples] = await Promise.all([
-    prisma.category.findMany({ orderBy: { displayOrder: 'asc' }, take: 6 }),
+    prisma.category.findMany({ 
+      where: { parentId: null },
+      orderBy: { displayOrder: 'asc' }, 
+      take: 6 
+    }),
     prisma.product.findMany({
       where: { featured: true, active: true },
       take: 8,
@@ -23,6 +27,7 @@ async function getData() {
     }),
     // Top 3 categorías con sus primeros 4 productos
     prisma.category.findMany({
+      where: { parentId: null },
       orderBy: { displayOrder: 'asc' },
       take: 3,
       include: {
@@ -82,42 +87,26 @@ const IconParty = () => (
 
 /* Category SVG icons (one per slug) */
 const CAT_ICONS = {
-  'globos-decoracion': (
+  papelera: (
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="10" r="7" /><path d="M12 17v1" /><path d="M9 20h6" />
+      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <path d="M16 10a4 4 0 0 1-8 0" />
     </svg>
   ),
-  'cotillon': (
+  cotillon: (
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M5.8 11.3 2 22l10.7-3.79" />
       <path d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2z" />
       <path d="M4 3h.01" /><path d="M22 8h.01" /><path d="M15 2h.01" />
     </svg>
   ),
-  'vajilla-descartable': (
+  reposteria: (
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
-      <line x1="7" y1="2" x2="7" y2="11" />
-      <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h1v5a1 1 0 0 0 2 0V2" />
-    </svg>
-  ),
-  'pinatas': (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </svg>
-  ),
-  'bolsas-empaques': (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <polyline points="20 12 20 22 4 22 4 12" />
-      <rect x="2" y="7" width="20" height="5" />
-      <line x1="12" y1="22" x2="12" y2="7" />
-      <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
-      <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
-    </svg>
-  ),
-  'tematico-infantil': (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      <path d="M2 18c0 1.1.9 2 2 2h16a2 2 0 0 0 2-2v-1H2v1z" />
+      <path d="M20 13H4a2 2 0 0 0-2 2v2h20v-2a2 2 0 0 0-2-2z" />
+      <path d="M12 4c-1.5 0-3 .5-3 2 0 1.5 1.5 3 3 5 1.5-2 3-3.5 3-5 0-1.5-1.5-2-3-2z" />
+      <path d="M10 13v-1a2 2 0 0 1 4 0v1" />
     </svg>
   ),
 };
@@ -136,11 +125,9 @@ function getCatColor(i) {
 }
 
 const CAT_IMAGES = {
-  papeleria: '/images/cat-papelera.webp',
+  papelera: '/images/cat-papelera.webp',
   cotillon: '/images/cat-cotillon.webp',
-  descartables: '/images/cat-papelera.webp',
   reposteria: '/images/cat-reposteria.webp',
-  embalaje: '/images/cat-papelera.webp',
 };
 
 export default async function HomePage() {

@@ -12,12 +12,29 @@ export default async function ProductosPage({ searchParams }) {
     const params = await searchParams;
     const page = Math.max(1, parseInt(params.page || '1'));
     const categoria = params.categoria || '';
+    const sub = params.sub || '';
     const buscar = params.buscar || '';
     const orden = params.orden || 'nombre_asc';
     const LIMIT = 24;
 
+    // Build where clause with subcategory support
     const where = { active: true };
-    if (categoria) where.category = { slug: categoria };
+    if (sub) {
+        // Filtering by subcategory
+        where.category = { slug: sub };
+    } else if (categoria) {
+        // Filtering by parent: include parent + all its children
+        const parentCat = await prisma.category.findUnique({
+            where: { slug: categoria },
+            include: { children: { select: { id: true } } }
+        });
+        if (parentCat) {
+            const ids = [parentCat.id, ...parentCat.children.map(c => c.id)];
+            where.categoryId = { in: ids };
+        } else {
+            where.category = { slug: categoria };
+        }
+    }
     if (buscar) {
         where.OR = [
             { name: { contains: buscar } },
@@ -34,7 +51,8 @@ export default async function ProductosPage({ searchParams }) {
     };
     const orderBy = orderMap[orden] || { name: 'asc' };
 
-    const [products, total, categories] = await Promise.all([
+    // Fetch products, count, parent categories, and subcategories of selected parent
+    const [products, total, parentCategories] = await Promise.all([
         prisma.product.findMany({
             where,
             orderBy,
@@ -43,20 +61,45 @@ export default async function ProductosPage({ searchParams }) {
             include: { category: { select: { name: true, slug: true } } },
         }),
         prisma.product.count({ where }),
-        prisma.category.findMany({ orderBy: { displayOrder: 'asc' } }),
+        prisma.category.findMany({
+            where: { parentId: null },
+            orderBy: { displayOrder: 'asc' },
+            include: {
+                children: {
+                    orderBy: { displayOrder: 'asc' },
+                    select: { id: true, name: true, slug: true }
+                }
+            }
+        }),
     ]);
+
+    // Find current parent category and its subcategories
+    const activeParent = parentCategories.find(c => c.slug === categoria);
+    const subcategories = activeParent?.children || [];
 
     const totalPages = Math.ceil(total / LIMIT);
 
     function buildUrl(overrides) {
-        const p = { page: '1', categoria, buscar, orden, ...overrides };
+        const p = { page: '1', categoria, sub, buscar, orden, ...overrides };
         const q = new URLSearchParams();
         if (p.page && p.page !== '1') q.set('page', p.page);
         if (p.categoria) q.set('categoria', p.categoria);
+        if (p.sub) q.set('sub', p.sub);
         if (p.buscar) q.set('buscar', p.buscar);
         if (p.orden && p.orden !== 'nombre_asc') q.set('orden', p.orden);
         const qs = q.toString();
         return `/productos${qs ? `?${qs}` : ''}`;
+    }
+
+    // Get display title
+    function getTitle() {
+        if (buscar) return `Resultados para "${buscar}"`;
+        if (sub) {
+            const subCat = subcategories.find(c => c.slug === sub);
+            return subCat ? `${activeParent.name} › ${subCat.name}` : 'Productos';
+        }
+        if (categoria && activeParent) return activeParent.name;
+        return 'Todos los Productos';
     }
 
     return (
@@ -65,9 +108,7 @@ export default async function ProductosPage({ searchParams }) {
                 {/* Header */}
                 <div className={styles.header}>
                     <div>
-                        <h1 className={styles.title}>
-                            {buscar ? `Resultados para "${buscar}"` : categoria ? getCatName(categories, categoria) : 'Todos los Productos'}
-                        </h1>
+                        <h1 className={styles.title}>{getTitle()}</h1>
                         <p className={styles.count}>
                             {total === 0 ? 'Sin resultados' : `${total} producto${total !== 1 ? 's' : ''} encontrado${total !== 1 ? 's' : ''}`}
                         </p>
@@ -82,6 +123,7 @@ export default async function ProductosPage({ searchParams }) {
                             <h3 className={styles.filterTitle}>Buscar</h3>
                             <form action="/productos" method="GET">
                                 {categoria && <input type="hidden" name="categoria" value={categoria} />}
+                                {sub && <input type="hidden" name="sub" value={sub} />}
                                 {orden !== 'nombre_asc' && <input type="hidden" name="orden" value={orden} />}
                                 <div className={styles.searchBox}>
                                     <input
@@ -98,32 +140,6 @@ export default async function ProductosPage({ searchParams }) {
                                     </button>
                                 </div>
                             </form>
-                        </div>
-
-                        {/* Categorías */}
-                        <div className={styles.filterSection}>
-                            <h3 className={styles.filterTitle}>Categorías</h3>
-                            <ul className={styles.catList}>
-                                <li>
-                                    <Link
-                                        href={buildUrl({ categoria: '', page: '1' })}
-                                        className={`${styles.catItem} ${!categoria ? styles.catItemActive : ''}`}
-                                    >
-                                        <span>🎉 Todas</span>
-                                        <span className={styles.catCount}>{total}</span>
-                                    </Link>
-                                </li>
-                                {categories.map(cat => (
-                                    <li key={cat.id}>
-                                        <Link
-                                            href={buildUrl({ categoria: cat.slug, page: '1' })}
-                                            className={`${styles.catItem} ${categoria === cat.slug ? styles.catItemActive : ''}`}
-                                        >
-                                            <span>{cat.name}</span>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
                         </div>
 
                         {/* Ordenar */}
@@ -150,7 +166,7 @@ export default async function ProductosPage({ searchParams }) {
                         </div>
 
                         {/* Limpiar filtros */}
-                        {(categoria || buscar || orden !== 'nombre_asc') && (
+                        {(categoria || sub || buscar || orden !== 'nombre_asc') && (
                             <Link href="/productos" className={`btn btn-ghost ${styles.clearBtn}`}>
                                 ✕ Limpiar filtros
                             </Link>
@@ -159,6 +175,51 @@ export default async function ProductosPage({ searchParams }) {
 
                     {/* Grid */}
                     <main className={styles.main}>
+                        {/* Categorías principales — Chips */}
+                        <div className={styles.chipsContainer}>
+                            <h2 className={styles.chipsTitle}>Categorías</h2>
+                            <div className={styles.chips}>
+                                <Link
+                                    href="/productos"
+                                    className={`${styles.chip} ${!categoria && !sub ? styles.chipActive : ''}`}
+                                >
+                                    ✨ Todas
+                                </Link>
+                                {parentCategories.map(cat => (
+                                    <Link
+                                        key={cat.id}
+                                        href={buildUrl({ categoria: cat.slug, sub: '', page: '1' })}
+                                        className={`${styles.chip} ${categoria === cat.slug ? styles.chipActive : ''}`}
+                                    >
+                                        {cat.name}
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Subcategorías — aparecen al seleccionar una categoría padre */}
+                        {subcategories.length > 0 && (
+                            <div className={styles.subChipsContainer}>
+                                <div className={styles.subChips}>
+                                    <Link
+                                        href={buildUrl({ sub: '', page: '1' })}
+                                        className={`${styles.subChip} ${!sub ? styles.subChipActive : ''}`}
+                                    >
+                                        Todo en {activeParent.name}
+                                    </Link>
+                                    {subcategories.map(sc => (
+                                        <Link
+                                            key={sc.id}
+                                            href={buildUrl({ sub: sc.slug, page: '1' })}
+                                            className={`${styles.subChip} ${sub === sc.slug ? styles.subChipActive : ''}`}
+                                        >
+                                            {sc.name}
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
                         {products.length === 0 ? (
                             <div className="empty-state">
                                 <div className="empty-state-icon">🔍</div>
@@ -212,9 +273,4 @@ export default async function ProductosPage({ searchParams }) {
             </div>
         </div>
     );
-}
-
-function getCatName(categories, slug) {
-    const cat = categories.find(c => c.slug === slug);
-    return cat ? cat.name : 'Productos';
 }

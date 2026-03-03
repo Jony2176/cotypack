@@ -1,0 +1,105 @@
+.page {
+  padding-top: var(--navbar-height);
+  background: var(--bg);
+}
+
+.hero {
+  background: var(--surface-2);
+  padding: var(--space-4xl) 0;
+  text-align: center;
+  border-bottom: 2px solid var(--border);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--primary);
+  font-weight: 800;
+  margin-bottom: var(--space-sm);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.benefits {
+  padding: var(--space-4xl) 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+  margin-bottom: var(--space-4xl);
+}
+
+.infoCard {
+  background: white;
+  padding: var(--space-2xl);
+  border-radius: var(--radius-xl);
+  border: var(--border-clay);
+  box-shadow: var(--shadow-clay-sm);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.infoCard:hover {
+  transform: translateY(-8px);
+}
+
+.icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-md);
+}
+
+.infoCard h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  margin-bottom: var(--space-sm);
+  color: var(--text);
+}
+
+.infoCard p {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.ctaBox {
+  background: white;
+  padding: var(--space-3xl);
+  border-radius: var(--radius-2xl);
+  border: 4px solid var(--primary-light);
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ctaBox h2 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  margin-bottom: var(--space-md);
+}
+
+.ctaBox p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xl);
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-lg);
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .actions {
+    flex-direction: column;
+  }
+}

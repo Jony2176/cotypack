@@ -94,6 +94,16 @@
     border-color: rgba(79, 70, 229, 0.2);
 }
 
+.linkMayorista {
+    color: var(--secondary) !important;
+    font-weight: 800;
+}
+
+.linkMayorista:hover {
+    background: rgba(249, 115, 22, 0.08);
+    border-color: rgba(249, 115, 22, 0.2);
+}
+
 .link:focus-visible {
     outline: 3px solid var(--primary-light);
     outline-offset: 2px;
