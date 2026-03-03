@@ -1,0 +1,261 @@
+.page {
+    padding: calc(var(--navbar-height) + 40px) 0 var(--space-4xl);
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: var(--space-2xl);
+    flex-wrap: wrap;
+}
+
+.breadcrumb a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.breadcrumb a:hover {
+    color: var(--primary);
+}
+
+.breadcrumbCurrent {
+    color: var(--text);
+    font-weight: 500;
+}
+
+/* Product layout */
+.product {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: start;
+    margin-bottom: var(--space-4xl);
+}
+
+/* Gallery */
+.gallery {
+    position: sticky;
+    top: calc(var(--navbar-height) + 20px);
+}
+
+.mainImage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: linear-gradient(135deg, #F3F0FF, #FFE4F0);
+    border: 1px solid var(--border);
+}
+
+.img {
+    object-fit: cover;
+}
+
+.imgPlaceholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+}
+
+.discountBadge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--error);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+}
+
+.thumbs {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    overflow-x: auto;
+}
+
+.thumb {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    transition: border-color var(--transition);
+}
+
+.thumbActive {
+    border-color: var(--primary);
+}
+
+.thumbImg {
+    object-fit: cover;
+}
+
+/* Product info */
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.categoryLink {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.categoryLink:hover {
+    color: var(--primary-dark);
+}
+
+.name {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+/* Pricing */
+.pricing {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.price {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.comparePrice {
+    font-size: 1.1rem;
+    color: var(--muted);
+    text-decoration: line-through;
+}
+
+/* Stock */
+.stockOk {
+    color: var(--success);
+    font-weight: 600;
+}
+
+.stockLow {
+    color: var(--warning);
+    font-weight: 600;
+}
+
+.stockOut {
+    color: var(--muted);
+    font-weight: 500;
+}
+
+/* Description */
+.description {
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-lg);
+}
+
+.descTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.descText {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* Perks */
+.perks {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: var(--space-lg);
+    background: var(--surface-2);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+}
+
+.perk {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.perk span {
+    font-size: 1.2rem;
+}
+
+/* Related */
+.related {
+    margin-top: var(--space-4xl);
+}
+
+.relatedTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: var(--space-xl);
+}
+
+.relatedGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+}
+
+@media (max-width: 1024px) {
+    .relatedGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .product {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+    }
+
+    .gallery {
+        position: static;
+    }
+
+    .relatedGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .pricing {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .price {
+        font-size: 1.75rem;
+    }
+}

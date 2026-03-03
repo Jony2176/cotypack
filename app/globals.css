@@ -1,0 +1,762 @@
+/* ============================================================
+   COTYPACK — DESIGN SYSTEM (Claymorphism)
+   Skill: ui-ux-pro-max → ecommerce cotillon party playful
+   Style: Claymorphism · Fonts: Fredoka + Nunito · Palette: Indigo/Orange
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700;800&display=swap');
+
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  /* Paleta principal (ui-ux-pro-max: ecommerce festive) */
+  --primary: #4F46E5;
+  /* Indigo 600 */
+  --primary-light: #818CF8;
+  /* Indigo 400 */
+  --primary-dark: #3730A3;
+  /* Indigo 800 */
+  --secondary: #F97316;
+  /* Orange 500 — CTA recomendado */
+  --secondary-light: #FB923C;
+  --secondary-dark: #EA580C;
+  --accent: #A855F7;
+  /* Purple 500 — complemento festivo */
+  --accent-light: #D8B4FE;
+
+  /* Fondos clay (suaves, pastel) */
+  --bg: #EEF2FF;
+  /* Indigo 50 — recomendado por skill */
+  --surface: #FFFFFF;
+  --surface-2: #F5F3FF;
+  /* Violet 50 */
+  --surface-3: #FFF7ED;
+  /* Orange 50 */
+  --border: rgba(79, 70, 229, 0.15);
+  --border-strong: rgba(79, 70, 229, 0.3);
+
+  /* Texto */
+  --text: #1E1B4B;
+  /* Indigo 950 — recomendado por skill */
+  --text-secondary: #3730A3;
+  --muted: #6366F1;
+  /* Indigo 500 */
+  --muted-light: #A5B4FC;
+
+  /* Estados */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --info: #3B82F6;
+
+  /* Tipografía (Fredoka headings + Nunito body — skill recommendation) */
+  --font-heading: 'Fredoka', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+
+  /* Espaciado */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+
+  /* Bordes — Claymorphism: thick (3-4px), muy redondeados (16-24px) */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+  --radius-full: 9999px;
+
+  /* Sombras clay: doble sombra (inner + outer), sin hard lines */
+  --shadow-clay-sm:
+    0 2px 0px rgba(79, 70, 229, 0.4),
+    0 4px 12px rgba(79, 70, 229, 0.12);
+  --shadow-clay:
+    0 4px 0px rgba(79, 70, 229, 0.35),
+    0 8px 24px rgba(79, 70, 229, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  --shadow-clay-lg:
+    0 6px 0px rgba(79, 70, 229, 0.3),
+    0 16px 40px rgba(79, 70, 229, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --shadow-clay-orange:
+    0 4px 0px rgba(249, 115, 22, 0.4),
+    0 8px 24px rgba(249, 115, 22, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.12);
+
+  /* Bordes clay (thick 3px) */
+  --border-clay: 3px solid rgba(79, 70, 229, 0.25);
+  --border-clay-strong: 3px solid rgba(79, 70, 229, 0.5);
+
+  /* Transiciones suaves (150-300ms — skill requirement) */
+  --transition: 200ms ease-out;
+  --transition-slow: 350ms ease-out;
+
+  /* Layout */
+  --max-width: 1280px;
+  --navbar-height: 100px;
+}
+
+/* ============================================================
+   PREFERS-REDUCED-MOTION (skill: HIGH severity)
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  background: none;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+/* ============================================================
+   TIPOGRAFÍA — Fredoka es display, no pesada
+   ============================================================ */
+h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+  font-weight: 600;
+}
+
+h3 {
+  font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+  font-weight: 600;
+}
+
+h4 {
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  font-weight: 600;
+}
+
+h5 {
+  font-size: 1.1rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  line-height: 1.7;
+}
+
+/* ============================================================
+   BOTONES — Claymorphism: thick border, double shadow, press effect
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 13px 26px;
+  border-radius: var(--radius-lg);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: all var(--transition);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  position: relative;
+}
+
+/* Press effect (Claymorphism: soft press 200ms ease-out) */
+.btn:active {
+  transform: translateY(2px);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: 3px solid var(--primary-dark);
+  box-shadow: var(--shadow-clay);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-clay-lg);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: white;
+  border: 3px solid var(--secondary-dark);
+  box-shadow: var(--shadow-clay-orange);
+}
+
+.btn-secondary:hover {
+  background: var(--secondary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0px rgba(249, 115, 22, 0.4), 0 16px 40px rgba(249, 115, 22, 0.25);
+}
+
+.btn-outline {
+  background: white;
+  color: var(--primary);
+  border: 3px solid var(--primary);
+  box-shadow: var(--shadow-clay-sm);
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 2px solid transparent;
+}
+
+.btn-ghost:hover {
+  background: rgba(79, 70, 229, 0.08);
+  color: var(--primary);
+  border-color: rgba(79, 70, 229, 0.15);
+}
+
+.btn-sm {
+  padding: 8px 18px;
+  font-size: 0.85rem;
+}
+
+.btn-lg {
+  padding: 16px 36px;
+  font-size: 1.05rem;
+}
+
+/* Focus visible (accesibilidad — skill: CRITICAL) */
+.btn:focus-visible {
+  outline: 3px solid var(--primary-light);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   CARDS — Claymorphism
+   ============================================================ */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  border: var(--border-clay);
+  box-shadow: var(--shadow-clay-sm);
+  overflow: hidden;
+  transition: box-shadow var(--transition), transform var(--transition);
+  cursor: pointer;
+  /* skill: cursor-pointer on all clickable elements */
+}
+
+.card:hover {
+  box-shadow: var(--shadow-clay);
+  transform: translateY(-4px);
+}
+
+/* ============================================================
+   BADGES
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: 2px solid transparent;
+}
+
+.badge-primary {
+  background: rgba(79, 70, 229, 0.1);
+  color: var(--primary);
+  border-color: rgba(79, 70, 229, 0.2);
+}
+
+.badge-secondary {
+  background: rgba(249, 115, 22, 0.1);
+  color: var(--secondary);
+  border-color: rgba(249, 115, 22, 0.2);
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.1);
+  color: #065f46;
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.badge-warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: #92400e;
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
+.badge-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #991b1b;
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+/* ============================================================
+   INPUTS — Clay style
+   ============================================================ */
+.input {
+  width: 100%;
+  padding: 13px 18px;
+  border: var(--border-clay);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--surface);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+  box-shadow: inset 0 2px 4px rgba(79, 70, 229, 0.06);
+}
+
+.input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12), inset 0 2px 4px rgba(79, 70, 229, 0.06);
+}
+
+.input:focus-visible {
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--muted-light);
+  font-weight: 400;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+}
+
+/* Select */
+.select {
+  width: 100%;
+  padding: 13px 18px;
+  border: var(--border-clay);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--surface);
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234F46E5' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  padding-right: 44px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  box-shadow: inset 0 2px 4px rgba(79, 70, 229, 0.06);
+}
+
+.select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+}
+
+/* Textarea */
+.textarea {
+  width: 100%;
+  padding: 13px 18px;
+  border: var(--border-clay);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--surface);
+  resize: vertical;
+  min-height: 120px;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  box-shadow: inset 0 2px 4px rgba(79, 70, 229, 0.06);
+}
+
+.textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+}
+
+/* ============================================================
+   SPINNER
+   ============================================================ */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--space-md);
+  }
+}
+
+.section {
+  padding: var(--space-4xl) 0;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-3xl) 0;
+  }
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+}
+
+@media (max-width: 1024px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.gap-sm {
+  gap: var(--space-sm);
+}
+
+.gap-md {
+  gap: var(--space-md);
+}
+
+.gap-lg {
+  gap: var(--space-lg);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.text-secondary {
+  color: var(--secondary);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+/* ============================================================
+   PRECIO
+   ============================================================ */
+.price {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 1.2rem;
+}
+
+.price-compare {
+  font-size: 0.875rem;
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.price-discount {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--error);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 2px solid rgba(239, 68, 68, 0.2);
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4xl);
+  text-align: center;
+  color: var(--muted);
+}
+
+.empty-state-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-md);
+  opacity: 0.6;
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  background: var(--text);
+  color: white;
+  padding: 14px 20px;
+  border-radius: var(--radius-lg);
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-clay-lg);
+  z-index: 9999;
+  animation: slideInUp 0.25s ease-out;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.toast-success {
+  background: var(--success);
+}
+
+.toast-error {
+  background: var(--error);
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   SR-ONLY (accesibilidad)
+   ============================================================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* ============================================================
+   SELECCIÓN
+   ============================================================ */
+::selection {
+  background: rgba(79, 70, 229, 0.2);
+  color: var(--primary-dark);
+}
+
+/* ============================================================
+   DIVIDER
+   ============================================================ */
+.divider {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+  margin: var(--space-lg) 0;
+  border-radius: 2px;
+}

@@ -1,0 +1,96 @@
+.page {
+    padding: calc(var(--navbar-height) + 60px) 0 var(--space-4xl);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: var(--space-3xl);
+}
+
+.title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+}
+
+.sub {
+    color: var(--muted);
+    font-size: 1.1rem;
+    margin-top: 8px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.infoCard {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+.infoIcon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.infoTitle {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-bottom: 4px;
+}
+
+.infoText {
+    color: var(--text);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.form {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.formTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+}
+
+.sentBox {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4xl);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+}
+
+@media (max-width: 1024px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+}

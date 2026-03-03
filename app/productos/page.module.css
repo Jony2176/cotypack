@@ -1,0 +1,232 @@
+.page {
+    padding: calc(var(--navbar-height) + 40px) 0 var(--space-4xl);
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: var(--space-2xl);
+}
+
+.title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+}
+
+.count {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--space-2xl);
+}
+
+/* Sidebar */
+.sidebar {
+    position: sticky;
+    top: calc(var(--navbar-height) + 20px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    align-self: start;
+}
+
+.filterSection {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+.filterTitle {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    margin-bottom: var(--space-md);
+}
+
+.searchBox {
+    position: relative;
+}
+
+.searchBox .input {
+    padding-right: 44px;
+}
+
+.searchBtn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    transition: color var(--transition);
+}
+
+.searchBtn:hover {
+    color: var(--primary);
+}
+
+.catList,
+.ordenList {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.catItem,
+.ordenItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all var(--transition);
+}
+
+.catItem:hover,
+.ordenItem:hover {
+    background: var(--surface-2);
+    color: var(--primary);
+}
+
+.catItemActive,
+.ordenItemActive {
+    background: rgba(108, 60, 225, 0.1);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.catCount {
+    font-size: 0.75rem;
+    background: var(--surface-2);
+    border-radius: var(--radius-full);
+    padding: 2px 8px;
+}
+
+.clearBtn {
+    font-size: 0.85rem;
+    color: var(--error);
+    text-align: left;
+    padding: 8px 12px;
+}
+
+.clearBtn:hover {
+    color: var(--error);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+/* Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+}
+
+/* Paginación */
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-3xl);
+}
+
+.pageBtn {
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary);
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    text-decoration: none;
+    transition: all var(--transition);
+}
+
+.pageBtn:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.pageNumbers {
+    display: flex;
+    gap: 4px;
+}
+
+.pageNum {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    text-decoration: none;
+    transition: all var(--transition);
+}
+
+.pageNum:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.pageNumActive {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+    .layout {
+        grid-template-columns: 220px 1fr;
+        gap: var(--space-lg);
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-sm);
+    }
+}

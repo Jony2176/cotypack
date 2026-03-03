@@ -1,0 +1,117 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.qtyRow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.qtyLabel {
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.qtyControl {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.qtyBtn {
+    width: 40px;
+    height: 40px;
+    background: var(--surface-2);
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--text);
+    transition: background var(--transition);
+}
+
+.qtyBtn:hover:not(:disabled) {
+    background: var(--border);
+}
+
+.qtyBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.qtyValue {
+    min-width: 48px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.addBtn {
+    width: 100%;
+    transition: all var(--transition);
+}
+
+.addBtnSuccess {
+    background: var(--success) !important;
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3) !important;
+}
+
+.variants {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.variantsLabel {
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.variantsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.variantBtn {
+    padding: 8px 12px;
+    border: 2px solid var(--border-strong);
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.variantBtn:hover:not(:disabled) {
+    border-color: var(--primary);
+    background: var(--surface-2);
+}
+
+.variantBtnActive {
+    border-color: var(--primary);
+    background: rgba(79, 70, 229, 0.05);
+    color: var(--primary);
+}
+
+.variantBtnDisabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.variantPrice {
+    font-size: 0.85rem;
+    font-weight: 400;
+    opacity: 0.8;
+}

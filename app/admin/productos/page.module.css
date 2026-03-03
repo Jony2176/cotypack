@@ -1,0 +1,208 @@
+.page {
+    max-width: 1100px;
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: var(--space-xl);
+}
+
+.title {
+    font-size: 1.75rem;
+    font-weight: 800;
+}
+
+.sub {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 2px;
+}
+
+.toolbar {
+    margin-bottom: var(--space-lg);
+}
+
+.search {
+    max-width: 380px;
+}
+
+.loading {
+    text-align: center;
+    padding: var(--space-3xl);
+    color: var(--muted);
+}
+
+.tableWrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+}
+
+.table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.table tr:hover td {
+    background: var(--surface-2);
+}
+
+.rowInactive td {
+    opacity: 0.5;
+}
+
+.productName {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.productSlug {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: monospace;
+}
+
+.cell {
+    white-space: nowrap;
+}
+
+.priceCell {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--primary);
+}
+
+.comparePrice {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: line-through;
+}
+
+.stockBadge {
+    display: inline-block;
+    padding: 3px 10px;
+    background: rgba(16, 185, 129, 0.1);
+    color: #065f46;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.stockZero {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--error);
+}
+
+.stockLow {
+    background: rgba(245, 158, 11, 0.1);
+    color: #92400e;
+}
+
+.toggleBtn {
+    padding: 5px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.toggleActive {
+    background: rgba(16, 185, 129, 0.12);
+    color: #065f46;
+}
+
+.toggleActive:hover {
+    background: rgba(16, 185, 129, 0.2);
+}
+
+.toggleInactive {
+    background: rgba(107, 114, 128, 0.1);
+    color: var(--muted);
+}
+
+.toggleInactive:hover {
+    background: rgba(107, 114, 128, 0.2);
+}
+
+.actions {
+    display: flex;
+    gap: 6px;
+}
+
+.editBtn {
+    padding: 6px 12px;
+    background: rgba(108, 60, 225, 0.1);
+    color: var(--primary);
+    border-radius: var(--radius-md);
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background var(--transition);
+}
+
+.editBtn:hover {
+    background: rgba(108, 60, 225, 0.2);
+}
+
+.deleteBtn {
+    padding: 6px 12px;
+    background: rgba(239, 68, 68, 0.08);
+    color: var(--error);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition);
+}
+
+.deleteBtn:hover {
+    background: rgba(239, 68, 68, 0.15);
+}
+
+.empty {
+    text-align: center;
+    padding: var(--space-3xl);
+    color: var(--muted);
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    padding: var(--space-md) var(--space-lg);
+    border-top: 1px solid var(--border);
+}
+
+.pageInfo {
+    font-size: 0.875rem;
+    color: var(--muted);
+}
