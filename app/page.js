@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import prisma from '@/lib/prisma';
 import ProductCard from '@/components/ProductCard';
-import ProductCarousel from '@/components/ProductCarousel';
 import styles from './page.module.css';
 
 export const revalidate = 60;
@@ -238,13 +237,15 @@ export default async function HomePage() {
               </h2>
               <p className="text-muted">Los más elegidos por nuestros clientes</p>
             </div>
-            <ProductCarousel>
+            <div className={styles.carouselContainer}>
+              <div className={styles.productsCarousel}>
                 {featuredProducts.map(p => (
                   <div key={p.id} className={styles.carouselItem}>
                     <ProductCard product={p} />
                   </div>
                 ))}
-            </ProductCarousel>
+              </div>
+            </div>
             <div className={styles.viewAll}>
               <Link href="/productos" className="btn btn-outline">Ver todos los productos →</Link>
             </div>
@@ -260,13 +261,15 @@ export default async function HomePage() {
               <h2>🆕 Nuevos ingresos</h2>
               <p className="text-muted">Lo último que llegó a nuestra tienda</p>
             </div>
-            <ProductCarousel>
+            <div className={styles.carouselContainer}>
+              <div className={styles.productsCarousel}>
                 {newestProducts.map(p => (
                   <div key={p.id} className={styles.carouselItem}>
                     <ProductCard product={p} />
                   </div>
                 ))}
-            </ProductCarousel>
+              </div>
+            </div>
           </div>
         </section>
       )}
@@ -279,13 +282,15 @@ export default async function HomePage() {
               <h2>{cat.name}</h2>
               {cat.description && <p className="text-muted">{cat.description}</p>}
             </div>
-            <ProductCarousel>
+            <div className={styles.carouselContainer}>
+              <div className={styles.productsCarousel}>
                 {cat.products.map(p => (
                   <div key={p.id} className={styles.carouselItem}>
                     <ProductCard product={p} />
                   </div>
                 ))}
-            </ProductCarousel>
+              </div>
+            </div>
             <div className={styles.viewAll}>
               <Link href={`/productos?categoria=${cat.slug}`} className="btn btn-outline">
                 Ver todo en {cat.name} →
