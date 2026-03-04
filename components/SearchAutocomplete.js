@@ -30,8 +30,11 @@ export default function SearchAutocomplete({ defaultValue = '', categoria = '', 
     const buildUrl = (buscar) => {
         const p = new URLSearchParams();
         p.set('page', '1');
-        if (categoria) p.set('categoria', categoria);
-        if (sub) p.set('sub', sub);
+        // Si hay búsqueda, limpiar filtros de categoría para buscar en todo
+        if (!buscar) {
+            if (categoria) p.set('categoria', categoria);
+            if (sub) p.set('sub', sub);
+        }
         if (orden && orden !== 'nombre_asc') p.set('orden', orden);
         if (buscar) p.set('buscar', buscar);
         return `/productos?${p.toString()}`;

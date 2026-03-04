@@ -14,6 +14,7 @@ export default async function ProductosPage({ searchParams }) {
     const page = Math.max(1, parseInt(params.page || '1'));
     const categoria = params.categoria || '';
     const sub = params.sub || '';
+    const subsub = params.subsub || '';
     const buscar = params.buscar || '';
     const orden = params.orden || 'nombre_asc';
     const LIMIT = 24;
@@ -27,17 +28,33 @@ export default async function ProductosPage({ searchParams }) {
         ];
     }
 
-    if (sub) {
-        // Filtering by subcategory
-        where.category = { slug: sub };
-    } else if (categoria) {
-        // Filtering by parent: include all its children
-        const parentCat = await prisma.category.findUnique({
-            where: { slug: categoria },
+    if (subsub) {
+        // Filtering by sub-subcategory (most specific)
+        where.category = { slug: subsub };
+    } else if (sub) {
+        // Filtering by subcategory — also include its children if any
+        const subCat = await prisma.category.findUnique({
+            where: { slug: sub },
             include: { children: { select: { id: true } } }
         });
+        if (subCat && subCat.children.length > 0) {
+            const ids = [subCat.id, ...subCat.children.map(c => c.id)];
+            where.categoryId = { in: ids };
+        } else if (subCat) {
+            where.categoryId = subCat.id;
+        }
+    } else if (categoria) {
+        // Filtering by parent: include all its children and grandchildren
+        const parentCat = await prisma.category.findUnique({
+            where: { slug: categoria },
+            include: { children: { select: { id: true, children: { select: { id: true } } } } }
+        });
         if (parentCat && parentCat.children.length > 0) {
-            const ids = parentCat.children.map(c => c.id);
+            const ids = [];
+            parentCat.children.forEach(c => {
+                ids.push(c.id);
+                if (c.children) c.children.forEach(gc => ids.push(gc.id));
+            });
             where.categoryId = { in: ids };
         } else if (parentCat) {
             where.categoryId = parentCat.id;
@@ -79,14 +96,34 @@ export default async function ProductosPage({ searchParams }) {
     const activeParent = parentCategories.find(c => c.slug === categoria);
     const subcategories = activeParent?.children || [];
 
+    // Find sub-subcategories if active sub has children
+    const activeSub = subcategories.find(c => c.slug === sub);
+    let subSubcategories = [];
+    if (activeSub) {
+        const subWithChildren = await prisma.category.findUnique({
+            where: { id: activeSub.id },
+            include: { children: { orderBy: { displayOrder: 'asc' }, select: { id: true, name: true, slug: true } } }
+        });
+        subSubcategories = subWithChildren?.children || [];
+    }
+
     const totalPages = Math.ceil(total / LIMIT);
 
     function buildUrl(overrides) {
-        const p = { page: '1', categoria, sub, buscar, orden, ...overrides };
+        const p = { page: '1', categoria, sub, subsub, buscar, orden, ...overrides };
+        // Si se navega a categoría/sub/subsub, limpiar búsqueda
+        if ('categoria' in overrides || 'sub' in overrides || 'subsub' in overrides) p.buscar = '';
+        // Si se cambia categoría, limpiar sub y subsub
+        if ('categoria' in overrides) { p.sub = overrides.sub || ''; p.subsub = ''; }
+        // Si se cambia sub, limpiar subsub
+        if ('sub' in overrides) { p.subsub = overrides.subsub || ''; }
+        // Si se busca, limpiar todo
+        if (p.buscar) { p.categoria = ''; p.sub = ''; p.subsub = ''; }
         const q = new URLSearchParams();
         if (p.page && p.page !== '1') q.set('page', p.page);
         if (p.categoria) q.set('categoria', p.categoria);
         if (p.sub) q.set('sub', p.sub);
+        if (p.subsub) q.set('subsub', p.subsub);
         if (p.buscar) q.set('buscar', p.buscar);
         if (p.orden && p.orden !== 'nombre_asc') q.set('orden', p.orden);
         const qs = q.toString();
@@ -96,6 +133,10 @@ export default async function ProductosPage({ searchParams }) {
     // Get display title
     function getTitle() {
         if (buscar) return `Resultados para "${buscar}"`;
+        if (subsub && activeSub) {
+            const ssCat = subSubcategories.find(c => c.slug === subsub);
+            return ssCat ? `${activeParent.name} › ${activeSub.name} › ${ssCat.name}` : `${activeParent.name} › ${activeSub.name}`;
+        }
         if (sub) {
             const subCat = subcategories.find(c => c.slug === sub);
             return subCat ? `${activeParent.name} › ${subCat.name}` : 'Productos';
@@ -117,15 +158,13 @@ export default async function ProductosPage({ searchParams }) {
                     </div>
                 </div>
 
+                <div className={styles.searchBar}>
+                    <SearchAutocomplete defaultValue={buscar} categoria={categoria} sub={sub} orden={orden} />
+                </div>
+
                 <div className={styles.layout}>
                     {/* Sidebar filtros */}
                     <aside className={styles.sidebar}>
-                        {/* Búsqueda */}
-                        <div className={styles.filterSection}>
-                            <h3 className={styles.filterTitle}>Buscar</h3>
-                            <SearchAutocomplete defaultValue={buscar} categoria={categoria} sub={sub} orden={orden} />
-                        </div>
-
                         {/* Ordenar */}
                         <div className={styles.filterSection}>
                             <h3 className={styles.filterTitle}>Ordenar por</h3>
@@ -202,6 +241,30 @@ export default async function ProductosPage({ searchParams }) {
                                             className={`${styles.subChip} ${sub === sc.slug ? styles.subChipActive : ''}`}
                                         >
                                             {sc.name}
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {subSubcategories.length > 0 && (
+                            <div className={styles.subChipsContainer}>
+                                <div className={styles.subChips}>
+                                    <Link
+                                        href={buildUrl({ subsub: '', page: '1' })}
+                                        scroll={false}
+                                        className={`${styles.subChip} ${!subsub ? styles.subChipActive : ''}`}
+                                    >
+                                        Todo en {activeSub.name}
+                                    </Link>
+                                    {subSubcategories.map(ssc => (
+                                        <Link
+                                            key={ssc.id}
+                                            href={buildUrl({ subsub: ssc.slug, page: '1' })}
+                                            scroll={false}
+                                            className={`${styles.subChip} ${subsub === ssc.slug ? styles.subChipActive : ''}`}
+                                        >
+                                            {ssc.name}
                                         </Link>
                                     ))}
                                 </div>
