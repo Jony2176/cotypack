@@ -26,7 +26,7 @@ const IconStar = () => (
     </svg>
 );
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, mayorista = false }) {
     const { addToCart } = useCart();
     const router = useRouter();
     const images = getProductImages(product);
@@ -35,10 +35,9 @@ export default function ProductCard({ product }) {
     const hasVariants = variants.length > 0;
     const displayPrice = getProductDisplayPrice(product);
 
-    // Si tiene variantes no aplicamos un % de descuento global acá en la card por defecto
-    const discount = !hasVariants && product.comparePrice && product.comparePrice > product.price
-        ? Math.round((1 - product.price / product.comparePrice) * 100)
-        : null;
+    // Si es mayorista aplicamos un descuento visual del 15% (ajustar luego)
+    const WHOL_DISCOUNT = 0.85; 
+    const finalPrice = mayorista ? displayPrice.minPrice * WHOL_DISCOUNT : displayPrice.minPrice;
 
     // Calculo total de stock si tiene variantes
     const totalVariantStock = hasVariants ? variants.reduce((sum, v) => sum + Number(v.stock), 0) : product.stock;
@@ -48,14 +47,22 @@ export default function ProductCard({ product }) {
         e.preventDefault();
         e.stopPropagation();
         if (hasVariants) {
-            router.push(`/productos/${product.slug}`);
+            router.push(`/productos/${product.slug}${mayorista ? '?m=1' : ''}`);
             return;
         }
-        addToCart({ id: product.id, name: product.name, price: product.price, image: mainImage, slug: product.slug, stock: product.stock });
+        addToCart({ 
+            id: product.id, 
+            name: product.name, 
+            price: mayorista ? product.price * WHOL_DISCOUNT : product.price, 
+            image: mainImage, 
+            slug: product.slug, 
+            stock: product.stock,
+            isMayorista: mayorista 
+        });
     };
 
     return (
-        <Link href={`/productos/${product.slug}`} className={styles.card} aria-label={`Ver ${product.name}`}>
+        <Link href={`/productos/${product.slug}${mayorista ? '?m=1' : ''}`} className={`${styles.card} ${mayorista ? styles.cardMayorista : ''}`} aria-label={`Ver ${product.name}`}>
             {/* Imagen */}
             <div className={styles.imageWrap}>
                 {mainImage ? (
@@ -80,6 +87,11 @@ export default function ProductCard({ product }) {
                     {product.featured && (
                         <span className={styles.featuredBadge}>
                             <IconStar /> Destacado
+                        </span>
+                    )}
+                    {mayorista && (
+                        <span className={styles.mayoristaBadge}>
+                            PRECIO MAYORISTA
                         </span>
                     )}
                 </div>
@@ -111,11 +123,16 @@ export default function ProductCard({ product }) {
                 <h3 className={styles.name}>{product.name}</h3>
 
                 <div className={styles.priceRow}>
-                    <span className={styles.price}>
-                        {displayPrice.isRange && <span style={{ fontSize: '0.65em', opacity: 0.8, marginRight: '4px', fontWeight: '500' }}>Desde</span>}
-                        {formatPrice(displayPrice.minPrice)}
-                    </span>
-                    {product.comparePrice && product.comparePrice > product.price && !hasVariants && (
+                    <div className={styles.priceCol}>
+                        <span className={styles.price}>
+                            {displayPrice.isRange && <span style={{ fontSize: '0.65em', opacity: 0.8, marginRight: '4px', fontWeight: '500' }}>Desde</span>}
+                            {formatPrice(finalPrice)}
+                        </span>
+                        {mayorista && (
+                            <span className={styles.retailPrice}>PVP: {formatPrice(displayPrice.minPrice)}</span>
+                        )}
+                    </div>
+                    {product.comparePrice && product.comparePrice > product.price && !hasVariants && !mayorista && (
                         <span className={styles.comparePrice}>{formatPrice(product.comparePrice)}</span>
                     )}
                 </div>
@@ -133,3 +150,4 @@ export default function ProductCard({ product }) {
         </Link>
     );
 }
+

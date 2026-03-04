@@ -11,6 +11,9 @@ export const metadata = {
 
 export default async function ProductosPage({ searchParams }) {
     const params = await searchParams;
+    const cookieStore = await cookies();
+    const mayorista = await isMayorista(cookieStore);
+
     const page = Math.max(1, parseInt(params.page || '1'));
     const categoria = params.categoria || '';
     const sub = params.sub || '';
@@ -297,7 +300,7 @@ export default async function ProductosPage({ searchParams }) {
                         ) : (
                             <>
                                 <div className={styles.grid}>
-                                    {products.map(p => <ProductCard key={p.id} product={p} />)}
+                                    {products.map(p => <ProductCard key={p.id} product={p} mayorista={mayorista} />)}
                                 </div>
 
                                 {/* Paginación */}

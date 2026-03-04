@@ -136,7 +136,7 @@ export default function MayoristasPage() {
               <div className={styles.infoCard}>
                 <h3>¿Ya tenés cuenta?</h3>
                 <p>Si ya sos cliente mayorista, accedé al catálogo con precios especiales.</p>
-                <Link href="/login" className="btn btn-outline btn-lg">
+                <Link href="/mayoristas/login" className="btn btn-outline btn-lg">
                   Iniciar sesión
                 </Link>
               </div>

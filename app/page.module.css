@@ -430,10 +430,11 @@
 
 @media (max-width: 480px) {
   .carouselItem {
-    flex: 0 0 85%;
+    flex: 0 0 160px; /* Tamaño fijo más chico para mobile */
   }
   .productsCarousel {
-    gap: var(--space-md);
+    gap: var(--space-sm);
+    padding: 5px 2px 15px;
   }
 }
 
