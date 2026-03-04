@@ -19,27 +19,28 @@ export default async function ProductosPage({ searchParams }) {
 
     // Build where clause with subcategory support
     const where = { active: true };
-    if (sub) {
-        // Filtering by subcategory
-        where.category = { slug: sub };
-    } else if (categoria) {
-        // Filtering by parent: include parent + all its children
-        const parentCat = await prisma.category.findUnique({
-            where: { slug: categoria },
-            include: { children: { select: { id: true } } }
-        });
-        if (parentCat) {
-            const ids = [parentCat.id, ...parentCat.children.map(c => c.id)];
-            where.categoryId = { in: ids };
-        } else {
-            where.category = { slug: categoria };
-        }
-    }
     if (buscar) {
         where.OR = [
             { name: { contains: buscar } },
             { description: { contains: buscar } },
         ];
+    }
+
+    if (sub) {
+        // Filtering by subcategory
+        where.category = { slug: sub };
+    } else if (categoria) {
+        // Filtering by parent: include all its children
+        const parentCat = await prisma.category.findUnique({
+            where: { slug: categoria },
+            include: { children: { select: { id: true } } }
+        });
+        if (parentCat && parentCat.children.length > 0) {
+            const ids = parentCat.children.map(c => c.id);
+            where.categoryId = { in: ids };
+        } else if (parentCat) {
+            where.categoryId = parentCat.id;
+        }
     }
 
     const orderMap = {
@@ -222,7 +223,9 @@ export default async function ProductosPage({ searchParams }) {
 
                         {products.length === 0 ? (
                             <div className="empty-state">
-                                <div className="empty-state-icon">🔍</div>
+                                <div className="empty-state-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                </div>
                                 <h3>Sin resultados</h3>
                                 <p>Intentá con otro término o categoría</p>
                                 <Link href="/productos" className="btn btn-primary" style={{ marginTop: '16px' }}>Ver todos</Link>

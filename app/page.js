@@ -49,10 +49,10 @@ const IconTruck = () => (
     <circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
   </svg>
 );
-const IconCreditCard = () => (
+const IconWallet = () => (
   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
-    <line x1="1" y1="10" x2="23" y2="10" />
+    <path d="M20 12V8a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4" />
+    <path d="M20 12h-4a2 2 0 0 0 0 4h4" />
   </svg>
 );
 const IconGift = () => (
@@ -112,8 +112,8 @@ const CAT_ICONS = {
 };
 
 const BENEFITS = [
-  { Icon: IconTruck, title: 'Envío a todo el país', desc: 'Despachamos por correo a cualquier punto de Argentina' },
-  { Icon: IconCreditCard, title: 'Todos los medios de pago', desc: 'Tarjeta, transferencia, MercadoPago y efectivo' },
+  { Icon: IconTruck, title: 'Retiro en local', desc: 'Retirá tu pedido directamente en nuestro local' },
+  { Icon: IconWallet, title: 'Medios de pago', desc: 'MercadoPago y efectivo' },
   { Icon: IconGift, title: 'Packs y combos', desc: 'Armamos packs personalizados según tu presupuesto' },
   { Icon: IconZap, title: 'Stock disponible', desc: 'Gran variedad siempre disponible, sin esperas' },
 ];
@@ -166,7 +166,7 @@ export default async function HomePage() {
             <div className={styles.statDivider} />
             <div className={styles.stat}><strong>6</strong><span>Categorías</span></div>
             <div className={styles.statDivider} />
-            <div className={styles.stat}><strong>AR</strong><span>Todo el país</span></div>
+            <div className={styles.stat}><strong>5★</strong><span>Calidad premium</span></div>
           </div>
         </div>
       </section>
@@ -316,7 +316,8 @@ export default async function HomePage() {
       <section className={styles.urgencyBanner}>
         <div className="container">
           <p className={styles.urgencyText}>
-            🎉 <strong>¡Envío gratis en compras mayoristas!</strong> — Consultá precios por cantidad
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{display:'inline',verticalAlign:'middle',marginRight:'6px'}} aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <strong>¡Descuentos en compras mayoristas!</strong> — Consultá precios por cantidad
           </p>
         </div>
       </section>

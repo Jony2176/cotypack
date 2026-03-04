@@ -132,7 +132,7 @@ export default function Footer() {
             {/* Security Bar */}
             <div className={styles.securityBar}>
                 <div className={styles.securityInner}>
-                    <span><IconTruck /> Envíos a todo el país</span>
+                    <span><IconTruck /> Retiro en local</span>
                     <span className={styles.divider}>|</span>
                     <span><IconShield /> Compra protegida</span>
                     <span className={styles.divider}>|</span>

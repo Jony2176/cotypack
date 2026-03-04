@@ -7,7 +7,9 @@ export default function CheckoutSuccessPage({ searchParams }) {
         <div className={styles.page}>
             <div className="container">
                 <div className={styles.box}>
-                    <div className={styles.icon}>🎉</div>
+                    <div className={styles.icon}>
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
                     <h1 className={styles.title}>¡Pedido recibido!</h1>
                     {id && <p className={styles.orderId}>Número de pedido: <strong>#{id}</strong></p>}
                     <p className={styles.message}>

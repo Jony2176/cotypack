@@ -71,7 +71,9 @@ export default function ProductClient({ product, images, displayPrice, hasDiscou
                             priority
                         />
                     ) : (
-                        <div className={styles.imgPlaceholder}>🎉</div>
+                        <div className={styles.imgPlaceholder}>
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        </div>
                     )}
                     {hasDiscount && (
                         <div className={styles.discountBadge}>-{discountPct}%</div>
@@ -124,7 +126,7 @@ export default function ProductClient({ product, images, displayPrice, hasDiscou
                         {product.stock === 0 ? (
                             <span className={styles.stockOut}>✗ Sin stock</span>
                         ) : product.stock <= 5 ? (
-                            <span className={styles.stockLow}>⚡ ¡Solo quedan {product.stock} unidades!</span>
+                            <span className={styles.stockLow}><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{display:'inline',verticalAlign:'middle',marginRight:'4px'}} aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>¡Solo quedan {product.stock} unidades!</span>
                         ) : (
                             <span className={styles.stockOk}>✓ En stock ({product.stock} disponibles)</span>
                         )}
@@ -209,9 +211,18 @@ export default function ProductClient({ product, images, displayPrice, hasDiscou
 
                 {/* Beneficios */}
                 <div className={styles.perks}>
-                    <div className={styles.perk}><span>📦</span> Envío a todo el país</div>
-                    <div className={styles.perk}><span>💵</span> Pagá con MercadoPago o Efectivo</div>
-                    <div className={styles.perk}><span>🎁</span> Packaging especial disponible</div>
+                    <div className={styles.perk}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                        Retiro por el local
+                    </div>
+                    <div className={styles.perk}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                        Pagá con MercadoPago o Efectivo
+                    </div>
+                    <div className={styles.perk}>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                        Consultá por ventas mayoristas
+                    </div>
                 </div>
             </div>
         </div>

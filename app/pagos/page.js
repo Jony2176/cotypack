@@ -62,14 +62,13 @@ export default function PagosPage() {
                 <h2>Efectivo</h2>
               </div>
               <p className={styles.description}>
-                Pagá en efectivo al momento de retirar tu pedido o contra entrega 
-                (solo en zonas habilitadas de CABA y GBA).
+                Pagá en efectivo al momento de retirar tu pedido en nuestro local.
               </p>
               <div className={styles.detailsBox}>
                 <h3>Opciones:</h3>
                 <ul className={styles.list}>
-                  <li>Retiro en punto de entrega</li>
-                  <li>Contra entrega (consultar zonas)</li>
+                  <li>Retiro en punto de venta (local)</li>
+                  <li>Pago en mostrador</li>
                   <li>Rapipago / Pago Fácil (solo mayoristas)</li>
                 </ul>
               </div>
