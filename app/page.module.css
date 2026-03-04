@@ -414,23 +414,27 @@
 .carouselItem {
   flex: 0 0 calc(25% - (var(--space-lg) * 3 / 4));
   scroll-snap-align: start;
+  display: flex;
 }
 
 @media (max-width: 1024px) {
   .carouselItem {
     flex: 0 0 calc(33.333% - (var(--space-lg) * 2 / 3));
+    display: flex;
   }
 }
 
 @media (max-width: 768px) {
   .carouselItem {
     flex: 0 0 calc(50% - (var(--space-lg) * 1 / 2));
+    display: flex;
   }
 }
 
 @media (max-width: 480px) {
   .carouselItem {
     flex: 0 0 160px; /* Tamaño fijo más chico para mobile */
+    display: flex;
   }
   .productsCarousel {
     gap: var(--space-sm);

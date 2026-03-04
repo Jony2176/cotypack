@@ -2,6 +2,8 @@
 .card {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    width: 100%;
     background: var(--surface);
     border-radius: var(--radius-xl);
     border: var(--border-clay);
@@ -251,6 +253,7 @@
 .stockRow {
     display: flex;
     align-items: center;
+    margin-top: auto;
 }
 
 .inStock {
