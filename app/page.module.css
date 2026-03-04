@@ -383,6 +383,60 @@
   gap: var(--space-lg);
 }
 
+/* ============================================================
+   PRODUCT CAROUSEL (Mobile Friendly)
+   ============================================================ */
+.carouselContainer {
+  position: relative;
+  width: 100%;
+  padding-bottom: var(--space-md);
+}
+
+.productsCarousel {
+  display: flex;
+  gap: var(--space-lg);
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 10px 4px 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar for clean look */
+.productsCarousel::-webkit-scrollbar {
+  display: none;
+}
+.productsCarousel {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.carouselItem {
+  flex: 0 0 calc(25% - (var(--space-lg) * 3 / 4));
+  scroll-snap-align: start;
+}
+
+@media (max-width: 1024px) {
+  .carouselItem {
+    flex: 0 0 calc(33.333% - (var(--space-lg) * 2 / 3));
+  }
+}
+
+@media (max-width: 768px) {
+  .carouselItem {
+    flex: 0 0 calc(50% - (var(--space-lg) * 1 / 2));
+  }
+}
+
+@media (max-width: 480px) {
+  .carouselItem {
+    flex: 0 0 85%;
+  }
+  .productsCarousel {
+    gap: var(--space-md);
+  }
+}
+
 .viewAll {
   display: flex;
   justify-content: center;

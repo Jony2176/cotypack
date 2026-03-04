@@ -78,8 +78,7 @@ export default function SobreNosotrosPage() {
             <div className={styles.textContent}>
               <h2>Nuestra Historia</h2>
               <p>
-                Cotypack nació de la unión de dos mundos: la <strong>magia del cotillón</strong> y la 
-                <strong>practicidad de la papelera</strong>. Nuestra fundadora, Barby, comenzó con un 
+                Cotypack nació de la unión de dos mundos: la <strong>magia del cotillón</strong> y la <strong>practicidad de la papelera</strong>. Nuestra fundadora, Barby, comenzó con un 
                 pequeño sueño: ayudar a las familias a crear momentos inolvidables sin complicaciones.
               </p>
               <p>
@@ -143,7 +142,7 @@ export default function SobreNosotrosPage() {
               <Link href="/productos" className="btn btn-secondary btn-lg">
                 Ver productos →
               </Link>
-              <a href="https://wa.me/5491150058648" className="btn btn-primary btn-lg">
+              <a href="https://wa.me/5491159058648" className="btn btn-primary btn-lg">
                 Contactar por WhatsApp
               </a>
             </div>

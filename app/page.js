@@ -237,10 +237,14 @@ export default async function HomePage() {
               </h2>
               <p className="text-muted">Los más elegidos por nuestros clientes</p>
             </div>
-            <div className={styles.productsGrid}>
-              {featuredProducts.map(p => (
-                <ProductCard key={p.id} product={p} />
-              ))}
+            <div className={styles.carouselContainer}>
+              <div className={styles.productsCarousel}>
+                {featuredProducts.map(p => (
+                  <div key={p.id} className={styles.carouselItem}>
+                    <ProductCard product={p} />
+                  </div>
+                ))}
+              </div>
             </div>
             <div className={styles.viewAll}>
               <Link href="/productos" className="btn btn-outline">Ver todos los productos →</Link>
@@ -257,10 +261,14 @@ export default async function HomePage() {
               <h2>🆕 Nuevos ingresos</h2>
               <p className="text-muted">Lo último que llegó a nuestra tienda</p>
             </div>
-            <div className={styles.productsGrid}>
-              {newestProducts.map(p => (
-                <ProductCard key={p.id} product={p} />
-              ))}
+            <div className={styles.carouselContainer}>
+              <div className={styles.productsCarousel}>
+                {newestProducts.map(p => (
+                  <div key={p.id} className={styles.carouselItem}>
+                    <ProductCard product={p} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -274,10 +282,14 @@ export default async function HomePage() {
               <h2>{cat.name}</h2>
               {cat.description && <p className="text-muted">{cat.description}</p>}
             </div>
-            <div className={styles.productsGrid}>
-              {cat.products.map(p => (
-                <ProductCard key={p.id} product={p} />
-              ))}
+            <div className={styles.carouselContainer}>
+              <div className={styles.productsCarousel}>
+                {cat.products.map(p => (
+                  <div key={p.id} className={styles.carouselItem}>
+                    <ProductCard product={p} />
+                  </div>
+                ))}
+              </div>
             </div>
             <div className={styles.viewAll}>
               <Link href={`/productos?categoria=${cat.slug}`} className="btn btn-outline">

@@ -138,7 +138,7 @@ export default function CheckoutPage() {
                                 </div>
                                 <div className="input-group">
                                     <label className="input-label" htmlFor="notes">Notas adicionales</label>
-                                    <textarea id="notes" className="textarea" name="notes" value={form.notes} onChange={handleChange} placeholder="Domicilio de entrega, aclaraciones, etc." />
+                                    <textarea id="notes" className="textarea" name="notes" value={form.notes} onChange={handleChange} placeholder="Aclaraciones, variantes de color, tamaño, etc." />
                                 </div>
                             </div>
                         </div>

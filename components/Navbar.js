@@ -1,19 +1,35 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useCart } from '@/components/CartProvider';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
     const { itemCount } = useCart();
     const [scrolled, setScrolled] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
+    const [activeIdx, setActiveIdx] = useState(-1);
+    const searchRef = useRef(null);
+    const inputRef = useRef(null);
+    const debounceRef = useRef(null);
+    const router = useRouter();
     const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         const handler = () => setScrolled(window.scrollY > 20);
         window.addEventListener('scroll', handler);
         return () => window.removeEventListener('scroll', handler);
+    }, []);
+
+    // Click outside cierra search
+    useEffect(() => {
+        const handler = (e) => { if (searchRef.current && !searchRef.current.contains(e.target)) { setSearchOpen(false); setSuggestions([]); } };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
     }, []);
 
     return (
@@ -25,7 +41,7 @@ export default function Navbar() {
                     <img
                         src="/images/logo.png"
                         alt="Cotypack by Barby"
-                        style={{ height: '78px', width: 'auto', display: 'block' }}
+                        style={{ height: '95px', width: 'auto', display: 'block' }}
                     />
                 </Link>
 
@@ -40,6 +56,62 @@ export default function Navbar() {
 
                 {/* Acciones */}
                 <div className={styles.actions}>
+                    {/* Lupa búsqueda */}
+                    <div className={styles.searchWrap} ref={searchRef}>
+                        <button
+                            className={styles.searchToggle}
+                            onClick={() => { setSearchOpen(!searchOpen); setTimeout(() => inputRef.current?.focus(), 100); }}
+                            aria-label="Buscar"
+                        >
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        </button>
+                        {searchOpen && (
+                            <div className={styles.searchDropdown}>
+                                <form onSubmit={(e) => { e.preventDefault(); if (searchQuery.trim()) { router.push(`/productos?buscar=${encodeURIComponent(searchQuery.trim())}`); setSearchOpen(false); setSearchQuery(''); setSuggestions([]); } }}>
+                                    <input
+                                        ref={inputRef}
+                                        className={styles.searchInput}
+                                        type="text"
+                                        placeholder="¿Qué estás buscando?"
+                                        value={searchQuery}
+                                        onChange={(e) => {
+                                            setSearchQuery(e.target.value);
+                                            clearTimeout(debounceRef.current);
+                                            if (e.target.value.length >= 2) {
+                                                debounceRef.current = setTimeout(async () => {
+                                                    try {
+                                                        const res = await fetch(`/api/productos/suggest?q=${encodeURIComponent(e.target.value)}`);
+                                                        const data = await res.json();
+                                                        setSuggestions(data);
+                                                        setActiveIdx(-1);
+                                                    } catch { setSuggestions([]); }
+                                                }, 200);
+                                            } else { setSuggestions([]); }
+                                        }}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Escape') { setSearchOpen(false); setSearchQuery(''); setSuggestions([]); }
+                                            if (e.key === 'ArrowDown' && suggestions.length) { e.preventDefault(); setActiveIdx(i => Math.min(i + 1, suggestions.length - 1)); }
+                                            if (e.key === 'ArrowUp' && suggestions.length) { e.preventDefault(); setActiveIdx(i => Math.max(i - 1, -1)); }
+                                            if (e.key === 'Enter' && activeIdx >= 0) { e.preventDefault(); router.push(`/productos?buscar=${encodeURIComponent(suggestions[activeIdx].name)}`); setSearchOpen(false); setSearchQuery(''); setSuggestions([]); }
+                                        }}
+                                        autoComplete="off"
+                                    />
+                                </form>
+                                {suggestions.length > 0 && (
+                                    <ul className={styles.searchSuggestions}>
+                                        {suggestions.map((s, i) => (
+                                            <li
+                                                key={s.slug}
+                                                className={`${styles.searchSugItem} ${i === activeIdx ? styles.searchSugActive : ''}`}
+                                                onMouseDown={() => { router.push(`/productos?buscar=${encodeURIComponent(s.name)}`); setSearchOpen(false); setSearchQuery(''); setSuggestions([]); }}
+                                            >{s.name}</li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </div>
+                        )}
+                    </div>
+
                     <Link href="/carrito" className={styles.cartBtn} aria-label="Carrito">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />

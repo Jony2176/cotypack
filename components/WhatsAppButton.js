@@ -2,7 +2,7 @@
 import styles from './WhatsAppButton.module.css';
 
 export default function WhatsAppButton() {
-  const phoneNumber = "5491150058648"; // Reemplazar con el número real de Barby/Jony
+  const phoneNumber = "5491159058648"; // Reemplazar con el número real de Barby/Jony
   const message = "Hola! Vengo desde la web de Cotypack y quería hacer una consulta.";
   
   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;

@@ -19,14 +19,13 @@ export default async function ProductosPage({ searchParams }) {
     const orden = params.orden || 'nombre_asc';
     const LIMIT = 24;
 
+    function normalize(str) {
+        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    }
+
     // Build where clause with subcategory support
     const where = { active: true };
-    if (buscar) {
-        where.OR = [
-            { name: { contains: buscar } },
-            { description: { contains: buscar } },
-        ];
-    }
+    const buscarNorm = buscar ? normalize(buscar) : '';
 
     if (subsub) {
         // Filtering by sub-subcategory (most specific)
@@ -71,15 +70,30 @@ export default async function ProductosPage({ searchParams }) {
     const orderBy = orderMap[orden] || { name: 'asc' };
 
     // Fetch products, count, parent categories, and subcategories of selected parent
-    const [products, total, parentCategories] = await Promise.all([
-        prisma.product.findMany({
-            where,
-            orderBy,
-            skip: (page - 1) * LIMIT,
-            take: LIMIT,
-            include: { category: { select: { name: true, slug: true } } },
-        }),
-        prisma.product.count({ where }),
+    let products, total;
+    const baseQuery = {
+        where,
+        orderBy,
+        include: { category: { select: { name: true, slug: true } } },
+    };
+
+    if (buscarNorm) {
+        // Accent-insensitive search: fetch all, filter in JS, then paginate
+        const allProducts = await prisma.product.findMany(baseQuery);
+        const filtered = allProducts.filter(p =>
+            normalize(p.name).includes(buscarNorm) ||
+            (p.description && normalize(p.description).includes(buscarNorm))
+        );
+        total = filtered.length;
+        products = filtered.slice((page - 1) * LIMIT, page * LIMIT);
+    } else {
+        [products, total] = await Promise.all([
+            prisma.product.findMany({ ...baseQuery, skip: (page - 1) * LIMIT, take: LIMIT }),
+            prisma.product.count({ where }),
+        ]);
+    }
+
+    const [parentCategories] = await Promise.all([
         prisma.category.findMany({
             where: { parentId: null },
             orderBy: { displayOrder: 'asc' },

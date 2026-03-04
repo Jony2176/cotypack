@@ -121,7 +121,7 @@ export default function MayoristasPage() {
                 <h3>¿Tenés urgencia?</h3>
                 <p>Escribinos directamente por WhatsApp y te atendemos al instante.</p>
                 <a 
-                  href="https://wa.me/5491150058648?text=Hola!%20Vengo%20de%20la%20web%20y%20quiero%20consultar%20por%20venta%20mayorista." 
+                  href="https://wa.me/5491159058648?text=Hola!%20Vengo%20de%20la%20web%20y%20quiero%20consultar%20por%20venta%20mayorista." 
                   className={`btn btn-primary btn-lg ${styles.whatsappBtn}`}
                   target="_blank"
                   rel="noopener noreferrer"

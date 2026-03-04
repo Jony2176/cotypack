@@ -41,7 +41,7 @@ const IconCheck = () => (
 const INFO_ITEMS = [
     { Icon: IconMapPin, title: 'Ubicación', text: 'Buenos Aires, Argentina' },
     { Icon: IconMail, title: 'Email', text: 'hola@cotypack.com' },
-    { Icon: IconPhone, title: 'WhatsApp', text: '+54 11 5005-8648' },
+    { Icon: IconPhone, title: 'WhatsApp', text: '+54 11 5905-8648' },
     { Icon: IconClock, title: 'Horario', text: 'Lunes a Sábados\n9:00 – 18:00 hs' },
 ];
 
@@ -61,7 +61,7 @@ export default function ContactoForm() {
         const msg = encodeURIComponent(
             `Hola Cotypack! Soy ${form.name}.\n\nMensaje: ${form.message}\n\nContacto: ${form.email} | ${form.phone}`
         );
-        window.open(`https://wa.me/5491150058648?text=${msg}`, '_blank');
+        window.open(`https://wa.me/5491159058648?text=${msg}`, '_blank');
         setSent(true);
     };
 

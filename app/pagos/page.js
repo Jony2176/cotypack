@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from './page.module.css';
+import CopyButton from '@/app/checkout/success/CopyButton';
 
 export const metadata = {
   title: 'Métodos de Pago | Cotypack by Barby',
@@ -40,10 +41,12 @@ export default function PagosPage() {
                 <div className={styles.dataRow}>
                   <span>CVU:</span>
                   <strong className={styles.copyText}>0000003100010128642581</strong>
+                  <CopyButton text="0000003100010128642581" />
                 </div>
                 <div className={styles.dataRow}>
                   <span>Alias:</span>
                   <strong className={styles.copyText}>barby.d.e</strong>
+                  <CopyButton text="barby.d.e" />
                 </div>
               </div>
             </div>
