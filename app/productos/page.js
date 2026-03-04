@@ -182,6 +182,7 @@ export default async function ProductosPage({ searchParams }) {
                             <div className={styles.chips}>
                                 <Link
                                     href="/productos"
+                                    scroll={false}
                                     className={`${styles.chip} ${!categoria && !sub ? styles.chipActive : ''}`}
                                 >
                                     ✨ Todas
@@ -190,6 +191,7 @@ export default async function ProductosPage({ searchParams }) {
                                     <Link
                                         key={cat.id}
                                         href={buildUrl({ categoria: cat.slug, sub: '', page: '1' })}
+                                        scroll={false}
                                         className={`${styles.chip} ${categoria === cat.slug ? styles.chipActive : ''}`}
                                     >
                                         {cat.name}
@@ -204,6 +206,7 @@ export default async function ProductosPage({ searchParams }) {
                                 <div className={styles.subChips}>
                                     <Link
                                         href={buildUrl({ sub: '', page: '1' })}
+                                        scroll={false}
                                         className={`${styles.subChip} ${!sub ? styles.subChipActive : ''}`}
                                     >
                                         Todo en {activeParent.name}
@@ -212,6 +215,7 @@ export default async function ProductosPage({ searchParams }) {
                                         <Link
                                             key={sc.id}
                                             href={buildUrl({ sub: sc.slug, page: '1' })}
+                                            scroll={false}
                                             className={`${styles.subChip} ${sub === sc.slug ? styles.subChipActive : ''}`}
                                         >
                                             {sc.name}

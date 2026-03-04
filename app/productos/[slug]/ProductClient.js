@@ -134,39 +134,57 @@ export default function ProductClient({ product, images, displayPrice, hasDiscou
                 )}
 
                 {/* Descripción */}
-                {product.description && (
-                    <div className={styles.description}>
-                        <h3 className={styles.descTitle}>Descripción</h3>
-                        <p className={styles.descText}>{product.description}</p>
-                    </div>
-                )}
+                {product.description && (() => {
+                    const parts = product.description.split('•').map(s => s.trim()).filter(Boolean);
+                    const mainText = parts[0];
+                    const bullets = parts.slice(1);
+                    return (
+                        <div className={styles.description}>
+                            <h3 className={styles.descTitle}>Descripción</h3>
+                            {mainText && <p className={styles.descText}>{mainText}</p>}
+                            {bullets.length > 0 && (
+                                <ul className={styles.descBullets}>
+                                    {bullets.map((b, i) => (
+                                        <li key={i} className={styles.descBulletItem}>
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                                            <span>{b}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    );
+                })()}
 
                 {/* ======== ADD TO CART COMPONENTS INLINED ======== */}
                 <div className={AddToCartStyles.wrapper}>
                     {/* Selector de variantes si existen */}
-                    {hasVariants && (
-                        <div className={AddToCartStyles.variants}>
-                            <span className={AddToCartStyles.variantsLabel}>Presentación / Medida:</span>
-                            <div className={AddToCartStyles.variantsGrid}>
-                                {variants.map((v, i) => {
-                                    const noStock = Number(v.stock) === 0;
-                                    const isActive = selectedVariant && selectedVariant.name === v.name;
-                                    return (
-                                        <button
-                                            key={i}
-                                            className={`${AddToCartStyles.variantBtn} ${isActive ? AddToCartStyles.variantBtnActive : ''} ${noStock ? AddToCartStyles.variantBtnDisabled : ''}`}
-                                            onClick={() => handleVariantSelect(v)}
-                                            disabled={noStock}
-                                            type="button"
-                                        >
-                                            <span>{v.name}</span>
-                                            <span className={AddToCartStyles.variantPrice}>{formatPrice(v.price)}</span>
-                                        </button>
-                                    );
-                                })}
+                    {hasVariants && (() => {
+                        const allSamePrice = variants.every(v => v.price === variants[0].price);
+                        return (
+                            <div className={AddToCartStyles.variants}>
+                                <span className={AddToCartStyles.variantsLabel}>Presentación / Medida:</span>
+                                <div className={AddToCartStyles.variantsGrid}>
+                                    {variants.map((v, i) => {
+                                        const noStock = Number(v.stock) === 0;
+                                        const isActive = selectedVariant && selectedVariant.name === v.name;
+                                        return (
+                                            <button
+                                                key={i}
+                                                className={`${AddToCartStyles.variantBtn} ${isActive ? AddToCartStyles.variantBtnActive : ''} ${noStock ? AddToCartStyles.variantBtnDisabled : ''}`}
+                                                onClick={() => handleVariantSelect(v)}
+                                                disabled={noStock}
+                                                type="button"
+                                            >
+                                                <span>{v.name}</span>
+                                                {!allSamePrice && <span className={AddToCartStyles.variantPrice}>{formatPrice(v.price)}</span>}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        );
+                    })()}
 
                     {/* Selector de cantidad y stock global/variante */}
                     {(canAdd || (hasVariants && !selectedVariant)) && (

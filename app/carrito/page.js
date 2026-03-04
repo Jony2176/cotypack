@@ -41,33 +41,41 @@ export default function CarritoPage() {
                             const mainImage = images[0] || null;
                             return (
                                 <div key={item.cartId} className={styles.item}>
+                                    {/* Imagen */}
                                     <div className={styles.itemImage}>
                                         {mainImage ? (
                                             <Image src={mainImage} alt={item.name} fill sizes="100px" className={styles.itemImg} />
                                         ) : (
                                             <div className={styles.itemImgPlaceholder}>
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                            </div>
+                                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                            </div>
                                         )}
                                     </div>
-                                    <div className={styles.itemInfo}>
-                                        <h3 className={styles.itemName}>
-                                            {item.name}
-                                            {item.variantName && <span style={{ display: 'block', fontSize: '0.85em', color: 'var(--text-tertiary)', marginTop: '4px' }}>Medida/Presentación: {item.variantName}</span>}
-                                        </h3>
-                                        <span className={styles.itemPrice}>{formatPrice(item.price)}</span>
+                                    {/* Info + controles (columna derecha) */}
+                                    <div className={styles.itemBody}>
+                                        <div className={styles.itemTopRow}>
+                                            <div className={styles.itemInfo}>
+                                                <h3 className={styles.itemName}>
+                                                    {item.name}
+                                                    {item.variantName && <span style={{ display: 'block', fontSize: '0.85em', color: 'var(--text-tertiary)', marginTop: '2px' }}>Medida: {item.variantName}</span>}
+                                                </h3>
+                                                <span className={styles.itemPrice}>{formatPrice(item.price)}</span>
+                                            </div>
+                                            <button className={styles.removeBtn} onClick={() => removeFromCart(item.cartId)} aria-label="Eliminar">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                                                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div className={styles.itemBottomRow}>
+                                            <div className={styles.itemQty}>
+                                                <button className={styles.qtyBtn} onClick={() => updateQty(item.cartId, item.qty - 1)}>−</button>
+                                                <span className={styles.qtyVal}>{item.qty}</span>
+                                                <button className={styles.qtyBtn} onClick={() => updateQty(item.cartId, item.qty + 1)} disabled={item.qty >= item.stock}>+</button>
+                                            </div>
+                                            <div className={styles.itemTotal}>{formatPrice(item.price * item.qty)}</div>
+                                        </div>
                                     </div>
-                                    <div className={styles.itemQty}>
-                                        <button className={styles.qtyBtn} onClick={() => updateQty(item.cartId, item.qty - 1)}>−</button>
-                                        <span className={styles.qtyVal}>{item.qty}</span>
-                                        <button className={styles.qtyBtn} onClick={() => updateQty(item.cartId, item.qty + 1)} disabled={item.qty >= item.stock}>+</button>
-                                    </div>
-                                    <div className={styles.itemTotal}>{formatPrice(item.price * item.qty)}</div>
-                                    <button className={styles.removeBtn} onClick={() => removeFromCart(item.cartId)} aria-label="Eliminar">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                                            <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-                                        </svg>
-                                    </button>
                                 </div>
                             );
                         })}

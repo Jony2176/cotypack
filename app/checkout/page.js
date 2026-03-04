@@ -10,6 +10,7 @@ export default function CheckoutPage() {
     const { items, total, clearCart } = useCart();
     const router = useRouter();
     const [form, setForm] = useState({ name: '', email: '', phone: '', notes: '' });
+    const [paymentMethod, setPaymentMethod] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -21,6 +22,12 @@ export default function CheckoutPage() {
         setLoading(true);
         setError('');
 
+        if (!paymentMethod) {
+            setError('Por favor seleccioná un medio de pago.');
+            setLoading(false);
+            return;
+        }
+
         try {
             const res = await fetch('/api/pedidos', {
                 method: 'POST',
@@ -30,6 +37,7 @@ export default function CheckoutPage() {
                     customerEmail: form.email,
                     customerPhone: form.phone,
                     notes: form.notes,
+                    paymentMethod,
                     items: items.map(i => ({ productId: i.id, name: i.name, price: i.price, qty: i.qty })),
                     total,
                 }),
@@ -92,13 +100,37 @@ export default function CheckoutPage() {
                             </div>
                         </div>
 
-                        <div className={styles.paymentNotice}>
-                            <div className={styles.paymentIcon}>
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-                            </div>
-                            <div>
-                                <strong>Coordinación de pago</strong>
-                                <p>Una vez enviado el pedido nos pondremos en contacto para coordinar el pago y la entrega.</p>
+                        <div className={styles.paymentSection}>
+                            <h2 className={styles.formTitle}>Medio de pago</h2>
+                            <div className={styles.paymentOptions}>
+                                <button
+                                    type="button"
+                                    className={`${styles.paymentOption} ${paymentMethod === 'mercadopago' ? styles.paymentOptionActive : ''}`}
+                                    onClick={() => setPaymentMethod('mercadopago')}
+                                >
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 12V8a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4"/><path d="M20 12h-4a2 2 0 0 0 0 4h4"/></svg>
+                                    <div>
+                                        <div className={styles.paymentOptionTitle}>MercadoPago</div>
+                                        <div className={styles.paymentOptionSub}>Transferencia / QR / Link de pago</div>
+                                    </div>
+                                    {paymentMethod === 'mercadopago' && (
+                                        <svg className={styles.paymentCheck} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                    )}
+                                </button>
+                                <button
+                                    type="button"
+                                    className={`${styles.paymentOption} ${paymentMethod === 'efectivo' ? styles.paymentOptionActive : ''}`}
+                                    onClick={() => setPaymentMethod('efectivo')}
+                                >
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+                                    <div>
+                                        <div className={styles.paymentOptionTitle}>Efectivo</div>
+                                        <div className={styles.paymentOptionSub}>Al retirar en el local</div>
+                                    </div>
+                                    {paymentMethod === 'efectivo' && (
+                                        <svg className={styles.paymentCheck} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                    )}
+                                </button>
                             </div>
                         </div>
 
