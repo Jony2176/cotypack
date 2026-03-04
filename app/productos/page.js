@@ -2,6 +2,7 @@ import prisma from '@/lib/prisma';
 import ProductCard from '@/components/ProductCard';
 import styles from './page.module.css';
 import Link from 'next/link';
+import SearchAutocomplete from '@/components/SearchAutocomplete';
 
 export const metadata = {
     title: 'Catálogo de Productos',
@@ -122,25 +123,7 @@ export default async function ProductosPage({ searchParams }) {
                         {/* Búsqueda */}
                         <div className={styles.filterSection}>
                             <h3 className={styles.filterTitle}>Buscar</h3>
-                            <form action="/productos" method="GET">
-                                {categoria && <input type="hidden" name="categoria" value={categoria} />}
-                                {sub && <input type="hidden" name="sub" value={sub} />}
-                                {orden !== 'nombre_asc' && <input type="hidden" name="orden" value={orden} />}
-                                <div className={styles.searchBox}>
-                                    <input
-                                        className="input"
-                                        type="text"
-                                        name="buscar"
-                                        defaultValue={buscar}
-                                        placeholder="Buscar productos..."
-                                    />
-                                    <button type="submit" className={styles.searchBtn}>
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                            <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </form>
+                            <SearchAutocomplete defaultValue={buscar} categoria={categoria} sub={sub} orden={orden} />
                         </div>
 
                         {/* Ordenar */}

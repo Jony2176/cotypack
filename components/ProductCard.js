@@ -77,9 +77,6 @@ export default function ProductCard({ product }) {
 
                 {/* Badges */}
                 <div className={styles.badges}>
-                    {discount && (
-                        <span className={styles.discountBadge}>-{discount}%</span>
-                    )}
                     {product.featured && (
                         <span className={styles.featuredBadge}>
                             <IconStar /> Destacado

@@ -94,6 +94,19 @@
     flex-shrink: 0;
 }
 
+.cashBadge {
+    display: inline-block;
+    background: rgba(22, 163, 74, 0.12);
+    color: #16a34a;
+    border: 1px solid rgba(22, 163, 74, 0.3);
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 1px 7px;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+
 .errorMsg {
     background: rgba(239, 68, 68, 0.08);
     border: 1px solid rgba(239, 68, 68, 0.3);
@@ -102,6 +115,19 @@
     color: var(--error);
     font-size: 0.9rem;
     font-weight: 500;
+}
+
+.fieldError {
+    display: block;
+    color: var(--error, #ef4444);
+    font-size: 0.8rem;
+    margin-top: 4px;
+    padding-left: 2px;
+}
+
+:global(.input-error) {
+    border-color: var(--error, #ef4444) !important;
+    background: rgba(239, 68, 68, 0.04) !important;
 }
 
 /* Summary */

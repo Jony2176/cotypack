@@ -46,15 +46,17 @@
 .mainImage {
     position: relative;
     width: 100%;
-    aspect-ratio: 1;
+    aspect-ratio: 4/3;
+    max-height: 380px;
     border-radius: var(--radius-xl);
     overflow: hidden;
-    background: linear-gradient(135deg, #F3F0FF, #FFE4F0);
+    background: #ffffff;
     border: 1px solid var(--border);
 }
 
 .img {
     object-fit: contain;
+    padding: 16px;
 }
 
 .imgPlaceholder {

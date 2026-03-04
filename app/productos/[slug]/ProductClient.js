@@ -75,9 +75,7 @@ export default function ProductClient({ product, images, displayPrice, hasDiscou
                             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                         </div>
                     )}
-                    {hasDiscount && (
-                        <div className={styles.discountBadge}>-{discountPct}%</div>
-                    )}
+
                 </div>
                 {images.length > 1 && (
                     <div className={styles.thumbs}>
@@ -110,12 +108,8 @@ export default function ProductClient({ product, images, displayPrice, hasDiscou
                         {hasVariants && !selectedVariant && displayPrice.isRange && <span style={{ fontSize: '0.6em', opacity: 0.8, marginRight: '8px', fontWeight: '500' }}>Desde</span>}
                         {formatPrice(hasVariants && selectedVariant ? currentPrice : displayPrice.minPrice)}
                     </span>
-                    {hasDiscount && (
+                    {false && (
                         <>
-                            <span className={styles.comparePrice}>{formatPrice(product.comparePrice)}</span>
-                            <span className="badge-error" style={{ background: 'rgba(239,68,68,0.1)', color: 'var(--error)', padding: '4px 10px', borderRadius: '9999px', fontSize: '0.8rem', fontWeight: 700 }}>
-                                -{discountPct}% OFF
-                            </span>
                         </>
                     )}
                 </div>
