@@ -62,13 +62,10 @@ export default function ProductClient({ product, images, displayPrice, hasDiscou
             <div className={styles.gallery}>
                 <div className={styles.mainImage}>
                     {images.length > 0 ? (
-                        <Image
+                        <img
                             src={images[activeImage] || images[0]}
                             alt={product.name}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
                             className={styles.img}
-                            priority
                         />
                     ) : (
                         <div className={styles.imgPlaceholder}>

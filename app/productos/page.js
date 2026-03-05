@@ -2,6 +2,8 @@ import prisma from '@/lib/prisma';
 import ProductCard from '@/components/ProductCard';
 import styles from './page.module.css';
 import Link from 'next/link';
+import { cookies } from 'next/headers';
+import { isMayorista } from '@/lib/auth';
 import SearchAutocomplete from '@/components/SearchAutocomplete';
 
 export const metadata = {
