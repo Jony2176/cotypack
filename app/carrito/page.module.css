@@ -196,8 +196,30 @@
 .summaryRow {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
     font-size: 0.9rem;
     color: var(--text-secondary);
+}
+
+.summaryName {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.4;
+}
+
+.summaryQty {
+    white-space: nowrap;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.summaryPrice {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    white-space: nowrap;
+    text-align: right;
+    color: var(--primary);
 }
 
 .summaryTotal {

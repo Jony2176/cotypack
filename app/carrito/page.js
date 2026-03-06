@@ -97,8 +97,11 @@ export default function CarritoPage() {
                         <div className={styles.summaryRows}>
                             {items.map(item => (
                                 <div key={item.cartId} className={styles.summaryRow}>
-                                    <span>{item.name} {item.variantName ? `(${item.variantName})` : ''} × {item.qty}</span>
-                                    <span>{formatPrice(item.price * item.qty)}</span>
+                                    <span className={styles.summaryName}>
+                                        {item.name} {item.variantName ? `(${item.variantName})` : ''} 
+                                        <span className={styles.summaryQty}> × {item.qty}</span>
+                                    </span>
+                                    <span className={styles.summaryPrice}>{formatPrice(item.price * item.qty)}</span>
                                 </div>
                             ))}
                         </div>

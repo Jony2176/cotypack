@@ -2,7 +2,8 @@
 const nextConfig = {
   output: 'standalone',
   images: {
-    domains: ['localhost'],
+    unoptimized: true,
+    domains: ['localhost', '168.231.98.115'],
     remotePatterns: [
       {
         protocol: 'http',
